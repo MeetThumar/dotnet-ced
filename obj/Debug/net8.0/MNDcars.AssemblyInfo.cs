@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MNDcars")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47e23d79021017619c12ac0e7be4bb03ba81920c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("MNDcars")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MNDcars")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
