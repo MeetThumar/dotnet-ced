@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sold Cars</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            background-color: #121826;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 80px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            height: 450px;
+            text-align: left;
+            transition: transform 0.3s;
+        }
+
+            .card:hover {
+                transform: scale(1.1);
+            }
+
+            .card img {
+                width: 100%;
+                height: 50%;
+                border-radius: 16px;
+            }
+
+            .card h3 {
+                margin: 10px 0;
+            }
+
+            .card p {
+                margin: 5px 0;
+            }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1e1e1e;
+        }
+
+            .header input[type="text"], .header select {
+                padding: 5px;
+                border-radius: 4px;
+                border: 1px solid #cccccc;
+            }
+
+            .header nav {
+                margin-left: auto;
+            }
+
+                .header nav a {
+                    color: #ffffff;
+                    margin: 0 10px;
+                    text-decoration: none;
+                }
+
+                    .header nav a:hover {
+                        text-decoration: underline;
+                    }
+
+        .sold-cars-container {
+            margin-top: 40px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sold-cars-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <input type="text" id="searchInput" placeholder="Search by car name">
+        <select id="modelFilter">
+            <option value="">All Models</option>
+            <!-- Model options will be dynamically inserted here -->
+        </select>
+        <select id="cityFilter">
+            <option value="">All Cities</option>
+            <!-- City options will be dynamically inserted here -->
+        </select>
+        <select id="priceFilter">
+            <option value="">All Price Ranges</option>
+            <option value="Cheap">Cheap</option>
+            <option value="Average">Average</option>
+            <option value="Premium">Premium</option>
+        </select>
+    </div>
+    <div class="container" id="availableCarsContainer">
+        <!-- Available cars will be dynamically inserted here -->
+    </div>
+    <div class="sold-cars-container">
+        <h2 class="sold-cars-header">Sold Cars</h2>
+        <div class="container" id="soldCarsContainer">
+            <!-- Sold cars will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3001/api/cars')
+                .then(response => response.json())
+                .then(data => {
+                    populateFilters(data);
+                    displayCars(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+
+            function populateFilters(cars) {
+                const modelFilter = document.getElementById('modelFilter');
+                const cityFilter = document.getElementById('cityFilter');
+
+                // Extract unique models and cities
+                const models = [...new Set(cars.map(car => car.car_model))];
+                const cities = [...new Set(cars.map(car => car.location))];
+
+                // Populate model filter
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelFilter.appendChild(option);
+                });
+
+                // Populate city filter
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    cityFilter.appendChild(option);
+                });
+            }
+
+            function displayCars(cars) {
+                const availableCarsContainer = document.getElementById('availableCarsContainer');
+                const soldCarsContainer = document.getElementById('soldCarsContainer');
+
+                availableCarsContainer.innerHTML = '';
+                soldCarsContainer.innerHTML = '';
+
+                cars.forEach(car => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${car.image}" alt="${car.car_name}">
+                        <h3>${car.car_name}</h3>
+                        <p>${car.car_year}</p>
+                        <p>Model: ${car.car_model}</p>
+                        <p><span>📍</span> ${car.location}</p>
+                        <p><span>🚘</span> ${car.type}</p>
+                        <p><span>₹</span> ${car.price.toLocaleString()}</p>
+                    `;
+
+                    if (car.sold) {
+                        const soldLabel = document.createElement('p');
+                        soldLabel.className = 'text-red-600 font-bold';
+                        soldLabel.textContent = 'Sold';
+                        card.appendChild(soldLabel);
+                        soldCarsContainer.appendChild(card);
+                    } else {
+                        availableCarsContainer.appendChild(card);
+                    }
+                });
+            }
+
+            // Add event listeners for filters
+            document.getElementById('searchInput').addEventListener('input', filterCars);
+            document.getElementById('modelFilter').addEventListener('change', filterCars);
+            document.getElementById('cityFilter').addEventListener('change', filterCars);
+            document.getElementById('priceFilter').addEventListener('change', filterCars);
+
+            function filterCars() {
+                const searchInput = document.getElementById('searchInput').value.toLowerCase();
+                const modelFilter = document.getElementById('modelFilter').value;
+                const cityFilter = document.getElementById('cityFilter').value;
+                const priceFilter = document.getElementById('priceFilter').value;
+
+                fetch('http://localhost:3001/api/cars')
+                    .then(response => response.json())
+                    .then(data => {
+                        const filteredCars = data.filter(car => {
+                            const matchesSearch = car.car_name.toLowerCase().includes(searchInput);
+                            const matchesModel = modelFilter === '' || car.car_model === modelFilter;
+                            const matchesCity = cityFilter === '' || car.location === cityFilter;
+                            const matchesPrice = priceFilter === '' || getPriceRange(car.price) === priceFilter;
+                            return matchesSearch && matchesModel && matchesCity && matchesPrice;
+                        });
+                        displayCars(filteredCars);
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+
+            function getPriceRange(price) {
+                if (price < 2000000) return 'Cheap';
+                if (price < 3000000) return 'Average';
+                return 'Premium';
+            }
+        });
+    </script>
+</body>
+</html>
