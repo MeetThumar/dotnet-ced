@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "MNDcars.Controllers.ContactController",
+    "Method": "SubmitContactForm",
+    "RelativePath": "api/contact",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "MNDcars.Controllers.ContactFormModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
