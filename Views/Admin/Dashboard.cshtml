@@ -15,110 +15,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #121826;
+    margin: 0;
+    padding: 0;
+    color: white; /* Ensures all text is white */
+}
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+/* Header */
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white; /* Ensure header text is white */
+}
 
-            .header h1 {
-                font-size: 1.5rem;
-                font-weight: bold;
-            }
+.header button {
+    padding: 10px 20px;
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-            .header button {
-                padding: 10px 20px;
-                background-color: #dc2626;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
+.header button:hover {
+    background-color: #b91c1c;
+}
 
-                .header button:hover {
-                    background-color: #b91c1c;
-                }
+/* Stats Cards */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
+.stats div {
+    padding: 20px;
+    background-color: #2a3647;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: white; /* Ensure text inside stats cards is white */
+}
 
-            .stats div {
-                padding: 20px;
-                background-color: white;
-                border-radius: 10px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
+.stats p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white; /* Explicitly set text color to white */
+}
 
-            .stats p {
-                font-size: 1.25rem;
-                font-weight: bold;
-            }
+/* Table Styling */
+.table-container {
+    margin-bottom: 40px;
+}
 
-            .stats .total {
-                color: #10b981;
-            }
+.table-container h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white; /* Ensure subheading text is white */
+}
 
-            .stats .available {
-                color: #14b8a6;
-            }
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-            .stats .sold {
-                color: #3b82f6;
-            }
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #4b5563;
+    color: white; /* Ensure table text is white */
+}
 
-        .table-container {
-            margin-bottom: 40px;
-        }
+.table th {
+    background-color: #1e293b;
+}
 
-            .table-container h2 {
-                font-size: 1.25rem;
-                font-weight: bold;
-                margin-bottom: 10px;
-            }
+.table td {
+    background-color: #2a3647;
+}
 
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.table button {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    cursor: pointer;
+}
 
-            .table th, .table td {
-                padding: 12px;
-                text-align: left;
-                border-bottom: 1px solid #e5e7eb;
-            }
+.table button.delete {
+    color: #ef4444;
+}
 
-            .table th {
-                background-color: #f3f4f6;
-            }
+.table button:hover {
+    text-decoration: underline;
+}
 
-            .table button {
-                background: none;
-                border: none;
-                color: #3b82f6;
-                cursor: pointer;
-            }
-
-                .table button.delete {
-                    color: #ef4444;
-                }
 
         .modal {
             display: none;
@@ -138,7 +137,7 @@
             }
 
         .modal-content {
-            background-color: white;
+            background-color: #121826;
             padding: 20px;
             border-radius: 10px;
             max-width: 500px;
