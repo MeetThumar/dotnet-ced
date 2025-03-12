@@ -40,9 +40,9 @@
             margin-top: 10px;
         }
 
-            .btn:hover {
-                background-color: #1d4ed8;
-            }
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
 
         .error-message {
             color: red;
@@ -55,9 +55,7 @@
 
     <div class="login-container">
         <h2>Admin Login</h2>
-
         <div id="error-message" class="error-message" style="display: none;"></div>
-
         <form id="login-form">
             <input type="email" id="email" class="input-field" placeholder="Email address" required>
             <input type="password" id="password" class="input-field" placeholder="Password" required>
@@ -66,6 +64,20 @@
     </div>
 
     <script>
+        function getCookie(name) {
+            const cookies = document.cookie.split('; ');
+            for (let cookie of cookies) {
+                let [key, value] = cookie.split('=');
+                if (key === name) return value;
+            }
+            return null;
+        }
+
+        // Redirect if token exists
+        if (getCookie("token")) {
+            window.location.href = "/Admin/Dashboard";
+        }
+
         document.getElementById("login-form").addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -89,8 +101,11 @@
                     errorMessage.innerText = data.error;
                     errorMessage.style.display = "block";
                 } else {
-                    // Redirect to AdminDashboard.cshtml on successful login
-                      window.location.href = "/Admin/Dashboard";
+                    // Store token in a cookie
+                    document.cookie = `token=${data.token}; path=/; secure; max-age=86400`;
+                    
+                    // Redirect to Admin Dashboard
+                    window.location.href = "/Admin/Dashboard";
                 }
             })
             .catch(error => {

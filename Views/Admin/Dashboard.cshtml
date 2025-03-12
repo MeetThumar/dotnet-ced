@@ -1,11 +1,5 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Dashboard";
-}
-
-
-@{
-    ViewData["Title"] = "AdminDashboard";
 }
 
 <!DOCTYPE html>
@@ -177,12 +171,48 @@
                 .modal-content .submit:hover {
                     background-color: #059669;
                 }
+
+                    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+    addbutton {
+        padding: 12px 24px; /* Increase padding for a larger button */
+        background-color: #10b981; /* Green background color */
+        color: white;
+        font-size: 1rem; /* Slightly larger font for better readability */
+        border: none;
+        border-radius: 8px; /* Rounded corners */
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+        display: inline-block;
+        margin: 10px 0; /* Add margin for spacing */
+      }
     </style>
 </head>
 <body>
+      <script>
+        function getCookie(name) {
+            const cookies = document.cookie.split('; ');
+            for (let cookie of cookies) {
+                let [key, value] = cookie.split('=');
+                if (key === name) return value;
+            }
+            return null;
+        }
+
+        // Redirect if token does not exist
+        if (!getCookie("token")) {
+            window.location.href = "/Home/Admin";
+        }
+    </script>
     <div class="container">
         <div class="header">
-            <h1>Hello Admin, Admin Dashboard</h1>
+            <h1>Admin Dashboard</h1>
             <button onclick="handleLogout()">Logout</button>
         </div>
 
@@ -277,10 +307,11 @@
                 <input type="text" id="editCarAddress" placeholder="Address">
                 <input type="number" id="editCarPrice" placeholder="Price">
                 <input type="text" id="editCarType" placeholder="Type">
-                <div>
-                    <input type="checkbox" id="editCarSold">
-                    <label for="editCarSold">Sold</label>
-                </div>
+<div>
+  <label for="editCarSold" style="vertical-align: middle;">Sold</label>
+    <input type="checkbox" id="editCarSold" style="vertical-align: middle;">
+</div>
+
                 <input type="text" id="editCarImage" placeholder="Image URL">
                 <div>
                     <button class="cancel" onclick="handleEditCarToggle()">Cancel</button>
@@ -458,10 +489,13 @@
           }
         }
 
-        function handleLogout() {
-          // Implement logout functionality
-          alert('Logout functionality not implemented.');
-        }
+function handleLogout() {
+    // Remove the token cookie by setting its expiration date to the past
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure";
+
+    // Redirect to the root path
+    window.location.href = "/";
+}
 
         function validateCar(car) {
           if (car.car_name.length > 50) {
@@ -488,7 +522,3 @@
     </script>
 </body>
 </html>
-
-
-
-
