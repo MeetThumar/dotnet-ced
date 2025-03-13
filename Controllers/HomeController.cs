@@ -22,6 +22,10 @@ namespace MNDcars.Controllers
         {
             return View();
         }
+        public IActionResult Tos()
+        {
+            return View();
+        }
         public IActionResult Contact()
         {
             return View();

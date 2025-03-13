@@ -1,76 +1,107 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MNDcars</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MNDcars.styles.css" asp-append-version="true" />
-    <style>
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #000;
-            padding: 10px 20px;
-        }
-        .header .logo {
-            display: flex;
-            align-items: center;
-        }
-        .header .logo img {
-            height: 30px; /* Adjust the size as needed */
-            margin-right: 10px;
-        }
-        .header .logo span {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-        }
-        .header nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        .header nav a:hover {
-            text-decoration: underline;
-        }
-        .logo-link {
-        color: white; /* Set the text color to white */
-        text-decoration: none; /* Remove underline */
-        font-size: 1rem; /* Set font size to match the span */
-    }
-    </style>
-</head>
-<body>
-    <div class="header">
-<div class="logo">
-    <img src="https://cdn.thrivebot.in/cars/Group.png" alt="Logo">
-    <a asp-area="" asp-controller="Home" asp-action="Index" class="logo-link">MND</a>
-</div>
-        <nav>
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>@ViewData["Title"] - MNDcars</title>
+      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+      <link rel="stylesheet" href="~/MNDcars.styles.css" asp-append-version="true" />
+      <style>
+         html, body {
+         height: 100%;
+         margin: 0;
+         display: flex;
+         flex-direction: column;
+         }
+         .header {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         background-color: #000;
+         padding: 10px 20px;
+         }
+         .header .logo {
+         display: flex;
+         align-items: center;
+         }
+         .header .logo img {
+         height: 30px;
+         margin-right: 10px;
+         }
+         .header .logo a {
+         font-size: 1rem;
+         font-weight: bold;
+         color: white;
+         text-decoration: none;
+         }
+         .header nav a {
+         color: #fff;
+         text-decoration: none;
+         margin: 0 15px;
+         font-size: 18px;
+         }
+         .header nav a:hover {
+         text-decoration: underline;
+         }
+         .container {
+         flex: 1;
+         }
+         footer {
+         background-color: #f8f9fa;
+         padding: 10px 0;
+         text-align: center;
+         border-top: 1px solid #ddd;
+         }
+         .footer {
+         background-color: #222;
+         color: #fff;
+         padding: 15px 0;
+         text-align: center;
+         border-top: 3px solid #2f78c6;
+         }
+         .footer-link {
+         color: #3560e0;
+         text-decoration: none;
+         font-weight: 500;
+         margin: 0 5px;
+         }
+         .footer-link:hover {
+         text-decoration: underline;
+         color: #fff;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="header">
+         <div class="logo">
+            <img src="https://cdn.thrivebot.in/cars/Group.png" alt="Logo">
+            <a asp-area="" asp-controller="Home" asp-action="Index">MND</a>
+         </div>
+         <nav>
             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
             <a asp-area="" asp-controller="Home" asp-action="About">About</a>
             <a asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
-        </nav>
-    </div>
-    <div class="container">
-        <main role="main" class="pb-3">
+         </nav>
+      </div>
+      <div class="container">
+         <main role="main" class="pb-3">
             @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - MNDcars - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+         </main>
+      </div>
+      <footer class="footer">
+         <div class="container text-center">
+            <p class="mb-2">&copy; 2025 - <strong>MNDcars</strong></p>
+            <p>
+               <a asp-area="" asp-controller="Home" asp-action="Privacy" class="footer-link">Privacy Policy</a> |
+               <a asp-area="" asp-controller="Home" asp-action="Tos" class="footer-link">Terms of Service</a>
+            </p>
+         </div>
+      </footer>
+      <script src="~/lib/jquery/dist/jquery.min.js"></script>
+      <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="~/js/site.js" asp-append-version="true"></script>
+      @await RenderSectionAsync("Scripts", required: false)
+   </body>
 </html>
